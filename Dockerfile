@@ -10,7 +10,16 @@ RUN apt-get update && apt-get install -y \
 COPY . /app
 
 RUN pip install --upgrade pip setuptools wheel
-RUN pip install .
-RUN pip install runpod
+
+RUN pip uninstall -y torch torchaudio || true
+
+RUN pip install --no-cache-dir \
+    torch==2.6.0 \
+    torchaudio==2.6.0 \
+    --index-url https://download.pytorch.org/whl/cu126
+
+RUN pip install --no-cache-dir -e .
+
+RUN pip install --no-cache-dir runpod
 
 CMD ["python", "-u", "handler.py"]
