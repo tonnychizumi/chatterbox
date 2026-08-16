@@ -11,15 +11,10 @@ COPY . /app
 
 RUN pip install --upgrade pip setuptools wheel
 
-RUN pip uninstall -y torch torchaudio || true
-
-RUN pip install --no-cache-dir \
-    torch==2.6.0 \
-    torchaudio==2.6.0 \
-    --index-url https://download.pytorch.org/whl/cu126
-
-RUN pip install --no-cache-dir -e .
+RUN pip install --no-cache-dir .
 
 RUN pip install --no-cache-dir runpod
+
+ENV TRANSFORMERS_ATTN_IMPLEMENTATION=eager
 
 CMD ["python", "-u", "handler.py"]
