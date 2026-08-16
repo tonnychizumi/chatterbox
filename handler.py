@@ -8,7 +8,10 @@ import os
 from chatterbox.mtl_tts import ChatterboxMultilingualTTS
 
 device = "cuda" if torch.cuda.is_available() else "cpu"
-model = ChatterboxMultilingualTTS.from_pretrained(device=device)
+model = ChatterboxMultilingualTTS.from_pretrained(
+    device=device,
+    t3_model="v3"
+)
 
 
 def handler(job):
